@@ -2,12 +2,10 @@ from gpt4all import GPT4All
 import subprocess
 
 def get_pushed_code():
+   def get_pushed_code():
     try:
-        # Use git log to get the commit hash of the last commit
-        commit_hash = subprocess.check_output(['git', 'log', '--format=%H', '-n', '1']).decode('utf-8').strip()
-        
-        # Use git show to get the changes introduced in the last commit
-        code_changes = subprocess.check_output(['git', 'show', commit_hash]).decode('utf-8')
+        # Use git diff to get the changes introduced in the last pushed commit
+        code_changes = subprocess.check_output(['git', 'diff', 'HEAD^..HEAD']).decode('utf-8')
         return code_changes
     except subprocess.CalledProcessError as e:
         print(f"Error retrieving code changes: {e}")
