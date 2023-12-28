@@ -1,5 +1,4 @@
 import streamlit as st
-from waxilangchain import LangChainInterface
 
 #set up the app title
 st.title('MentalMind')
