@@ -1,0 +1,58 @@
+# name: Code Review
+
+# on: push # Adjust the branch as needed
+
+# jobs:
+#   review-code:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - name: Checkout Repository
+#       uses: actions/checkout@v4
+
+#     - name: Set Up Python
+#       uses: actions/setup-python@v4
+#       with:
+#         python-version: 3.9
+
+#     - name: Install Dependencies
+#       run: |
+#         pip install gpt4all  # Install the GPT4All library
+
+#     - name: Get Commit Message
+#       id: commit_msg
+#       run: echo "name=message::$(jq -r .commits[0].message $GITHUB_EVENT_PATH)" >> $GITHUB_OUTPUT
+
+#     - name: Run Code Review
+#       run: python ./gpt4all-code-review/review-code.py "${{ steps.commit_msg.outputs.message }}"  # Adjust the path as needed
+
+name: Code Review
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as needed
+
+jobs:
+  review-code:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set Up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install Dependencies
+      run: |
+        pip install gpt4all  # Install the GPT4All library
+
+    - name: Get Commit Message
+      id: get_commit_msg
+      run: echo "GITHUB_COMMIT_MESSAGE=$(jq -r .commits[0].message $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+
+    - name: Run Code Review
+      run: python ./gpt4all-code-review/review-code.py
