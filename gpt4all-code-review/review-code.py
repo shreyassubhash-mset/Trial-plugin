@@ -2,7 +2,6 @@ from gpt4all import GPT4All
 import subprocess
 
 def get_pushed_code():
-   def get_pushed_code():
     try:
         # Use git diff to get the changes introduced in the last pushed commit
         code_changes = subprocess.check_output(['git', 'diff', 'HEAD^..HEAD']).decode('utf-8')
@@ -24,10 +23,9 @@ if __name__ == "__main__":
     # Get the pushed code changes
     pushed_code = get_pushed_code()
 
-    # Perform code review
-    review_result = review_code(pushed_code)
+    if pushed_code is not None:
+        # Perform code review
+        review_result = review_code(pushed_code)
 
-    print(pushed_code)
-
-    # Print the review result
-    print(review_result)
+        # Print the review result
+        print(review_result)
