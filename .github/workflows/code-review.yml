@@ -1,31 +1,3 @@
-# name: Code Review
-
-# on: push # Adjust the branch as needed
-
-# jobs:
-#   review-code:
-#     runs-on: ubuntu-latest
-    
-#     steps:
-#     - name: Checkout Repository
-#       uses: actions/checkout@v4
-
-#     - name: Set Up Python
-#       uses: actions/setup-python@v4
-#       with:
-#         python-version: 3.9
-
-#     - name: Install Dependencies
-#       run: |
-#         pip install gpt4all  # Install the GPT4All library
-
-#     - name: Get Commit Message
-#       id: commit_msg
-#       run: echo "name=message::$(jq -r .commits[0].message $GITHUB_EVENT_PATH)" >> $GITHUB_OUTPUT
-
-#     - name: Run Code Review
-#       run: python ./gpt4all-code-review/review-code.py "${{ steps.commit_msg.outputs.message }}"  # Adjust the path as needed
-
 name: Code Review
 
 on:
@@ -50,9 +22,18 @@ jobs:
       run: |
         pip install gpt4all  # Install the GPT4All library
 
-    - name: Get Commit Message
-      id: get_commit_msg
-      run: echo "GITHUB_COMMIT_MESSAGE=$(jq -r .commits[0].message $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+    - name: Set GITHUB_COMMIT_MESSAGE
+      id: set_commit_message
+      run: echo "GITHUB_COMMIT_MESSAGE=$(git log -1 --pretty=format:%B)" >> $GITHUB_ENV
 
-    - name: Run Code Review
+    - name: Get Pushed Code
+      id: get_pushed_code
+      run: echo "GITHUB_PUSHED_CODE=$(git show --pretty=format:'%b' --no-patch)" >> $GITHUB_ENV
+
+    - name: Print Environment Variables
+      run: |
+        echo "Commit Message: $GITHUB_COMMIT_MESSAGE"
+        echo "Pushed Code: $GITHUB_PUSHED_CODE"
+
+    - name: Run Your Code Review
       run: python ./gpt4all-code-review/review-code.py
