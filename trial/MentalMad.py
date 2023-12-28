@@ -31,16 +31,3 @@ llm = LangChainInterface(
 
 #build a prompt input template to display the prompts
 prompt = st.chat_input('Pass your prompt here')
-
-#if the user hits enter then
-if prompt:
-    #display the prompt     
-    st.chat_message('user').markdown(prompt)
-    #Store the user prompt in state
-    st.session_state.messages.append({'role':'user','content':prompt})
-    #send the prompt to the LLM
-    response = llm(prompt)
-    #show the llm response
-    st.chat_message('assistant').markdown(response)
-    #store the LLM response in state
-    st.session_state.messages.append({'role':'assistant', 'content':response})
