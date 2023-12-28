@@ -26,10 +26,10 @@ if __name__ == "__main__":
 
     if pushed_code is not None:
         
-        print(pushed_code)
         # Perform code review
         review_result = review_code(pushed_code)
 
+        print(pushed_code)
 
         # Print the review result
         print(review_result)
