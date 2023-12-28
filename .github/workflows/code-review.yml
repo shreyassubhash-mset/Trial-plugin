@@ -28,7 +28,8 @@ jobs:
 
     - name: Get Pushed Code
       id: get_pushed_code
-      run: echo "GITHUB_PUSHED_CODE=$(git show --pretty=format:'%b')" >> $GITHUB_ENV
+      run: |
+        echo "GITHUB_PUSHED_CODE=$(git show --pretty=format:'%b')" >> $GITHUB_ENV
 
     - name: Print Environment Variables
       run: |
