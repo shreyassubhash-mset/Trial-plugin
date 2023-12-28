@@ -25,8 +25,11 @@ if __name__ == "__main__":
     pushed_code = get_pushed_code()
 
     if pushed_code is not None:
+        
+        print(pushed_code)
         # Perform code review
         review_result = review_code(pushed_code)
+
 
         # Print the review result
         print(review_result)
