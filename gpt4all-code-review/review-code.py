@@ -29,5 +29,7 @@ if __name__ == "__main__":
     # Perform code review
     review_result = review_code(pushed_code)
 
+    print(pushed_code)
+
     # Print the review result
     print(review_result)
