@@ -41,7 +41,7 @@ if __name__ == "__main__":
         pushed_code_chunks = chunk_string(pushed_code, chunk_size)
 
         # Initialize GPT4All model
-        model = GPT4All("orca-2-13b.Q4_0.gguf")
+        model = GPT4All("mistral-7b-instruct-v0.1.Q4_0.gguf")
 
         # Perform code review for each chunk and combine outputs
         review_result = review_code_chunks(model, pushed_code_chunks)
