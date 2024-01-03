@@ -11,7 +11,7 @@ def get_pushed_code():
         return None
  
 def review_code(commit_message):
-    model = GPT4All("Mistral-7B-Instruct-v0.2-2x7B-MoE-GGUF")
+    model = GPT4All("Mistral-7B-Instruct-v0.2.gguf")
     prompt = f"You are a senior software engineer with a sarcastic character who wants the others to learn and enjoy it as well instead of sharing what this code does please share a single paragraph summury containing the best practices and point any optimizations or concern in the commited code then give a small example and after that always add a programming quote in the end for the given code: \n {commit_message}. "
 
     # Call GPT4All to generate code review feedback
