@@ -19,7 +19,7 @@ def review_code_chunks(model, prompt, input_chunks):
 
     # Process the remaining input chunks
     for input_chunk in input_chunks:
-        output_chunk = model.generate(input_chunk)
+        output_chunk = model.generate(input_chunk, max_tokens= 100)
         output_chunks.append(output_chunk)
 
     return output_chunks
@@ -35,7 +35,7 @@ def generate_code_overview(output_chunks):
 
     # Process the combined output to generate a code overview paragraph
     overview_prompt = "Provide a code overview summarizing the main points and feedback: \n" + combined_output
-    overview = model.generate(overview_prompt)
+    overview = model.generate(overview_prompt, max_tokens=100)
 
     return overview
 
