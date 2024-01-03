@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     if pushed_code is not None:
         # Specify the chunk size
-        chunk_size = 1000  # You can adjust this based on your requirements
+        chunk_size = 1500  # You can adjust this based on your requirements
 
         # Split pushed_code into chunks
         code_chunks = process_input_in_chunks(pushed_code, chunk_size)
