@@ -9,42 +9,49 @@ def get_pushed_code():
     except subprocess.CalledProcessError as e:
         print(f"Error retrieving code changes: {e}")
         return None
-    
-def chunk_string(input_string, chunk_size):
-    # Chunk a string into chunks of a specified size.
-    return [input_string[i:i + chunk_size] for i in range(0, len(input_string), chunk_size)]
 
-def review_code_chunks(model, prompt_chunks):
-    # Process code review for each chunk and concatenate outputs.
-    review_outputs = []
-    for prompt_chunk in prompt_chunks:
-        output_chunk = model.generate(prompt_chunk)
-        review_outputs.append(output_chunk)
-    return '\n'.join(review_outputs)
- 
-# def review_code(commit_message):
-#     model = GPT4All("orca-2-13b.Q4_0.gguf")
-#     prompt = f"You are a senior software engineer with a sarcastic character who wants the others to learn and enjoy it as well instead of sharing what this code does please share a single paragraph summury containing the best practices and point any optimizations or concern in the commited code then give a small example and after that always add a programming quote in the end for the given code: \n {commit_message}. "
+def review_code_chunks(model, prompt, input_chunks):
+    output_chunks = []
 
-#     # Call GPT4All to generate code review feedback
-#     output = model.generate(prompt)
+    # Process the prompt
+    output_prompt = model.generate(prompt)
+    output_chunks.append(output_prompt)
 
-#     return output
+    # Process the remaining input chunks
+    for input_chunk in input_chunks:
+        output_chunk = model.generate(input_chunk)
+        output_chunks.append(output_chunk)
+
+    return output_chunks
+
+def process_input_in_chunks(input_data, chunk_size):
+    # Split input_data into chunks
+    chunks = [input_data[i:i + chunk_size] for i in range(0, len(input_data), chunk_size)]
+    return chunks
 
 if __name__ == "__main__":
     # Get the pushed code changes
     pushed_code = get_pushed_code()
 
     if pushed_code is not None:
-        # Chunk the pushed code
-        chunk_size = 1000  # Set your desired chunk size
-        pushed_code_chunks = chunk_string(pushed_code, chunk_size)
+        # Specify the chunk size
+        chunk_size = 1000  # You can adjust this based on your requirements
+
+        # Split pushed_code into chunks
+        code_chunks = process_input_in_chunks(pushed_code, chunk_size)
+
+        # Specify the prompt
+        prompt = "You are a senior software engineer with a sarcastic character who wants the others to learn and enjoy it as well instead of sharing what this code does please share a single paragraph summury containing the best practices and point any optimizations or concern in the commited code then give a small example and after that always add a programming quote in the end for the given code: \n {commit_message}."
 
         # Initialize GPT4All model
         model = GPT4All("mistral-7b-instruct-v0.1.Q4_0.gguf")
 
-        # Perform code review for each chunk and combine outputs
-        review_result = review_code_chunks(model, pushed_code_chunks)
+        # Perform code review on each chunk
+        review_results = review_code_chunks(model, prompt, code_chunks)
 
-        # Print the review result
-        print(review_result)
+        # Combine the outputs
+        combined_output = ''.join(review_results)
+
+        # Print the combined review result
+        print(combined_output)
+
