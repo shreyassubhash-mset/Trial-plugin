@@ -4,7 +4,7 @@ import subprocess
 def get_pushed_code():
     try:
         # Use git show to get the changes introduced in the last pushed commit
-        code_changes = subprocess.check_output(['git', 'show']).decode('utf-8')
+        code_changes = subprocess.check_output(['git', 'diff']).decode('utf-8')
         return code_changes
     except subprocess.CalledProcessError as e:
         print(f"Error retrieving code changes: {e}")
