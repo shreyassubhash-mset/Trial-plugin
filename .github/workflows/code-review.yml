@@ -1,6 +1,9 @@
 name: Code Review
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as needed
 
 jobs:
   review-code:
