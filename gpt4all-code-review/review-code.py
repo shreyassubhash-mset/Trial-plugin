@@ -5,7 +5,7 @@ import re
 def get_pushed_code():
     try:
         # Use git show to get the changes introduced in the last pushed commit
-        git_diff = subprocess.check_output(['git', 'diff', 'HEAD^', 'HEAD']).decode('utf-8')
+        git_diff = subprocess.check_output(['git', 'diff', 'HEAD-1', 'HEAD']).decode('utf-8')
 
         # Extract the added and modified code using regular expressions
         added_modified_code = re.findall(r'^\+.*', git_diff, re.MULTILINE)
