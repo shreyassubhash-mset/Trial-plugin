@@ -29,6 +29,6 @@ if __name__ == "__main__":
         review_result = review_code(pushed_code)
         
         # Print the review result
-        print(review_result)
+        print(pushed_code)
 
 
