@@ -1,11 +1,20 @@
 import gpt4all as GPT4All
 import subprocess
 import re
+import os
+
+def is_git_repo(directory):
+    return os.path.exists(os.path.join(directory, '.git'))
 
 def get_pushed_code():
     try:
+        # Check if the current directory is a git repository
+        if not is_git_repo(os.getcwd()):
+            print("Error: Current directory is not a git repository.")
+            return None
+
         # Use git show to get the changes introduced in the last pushed commit
-        git_diff = subprocess.check_output(['git', 'diff', 'HEAD-1', 'HEAD']).decode('utf-8')
+        git_diff = subprocess.check_output(['git', 'diff', 'HEAD^', 'HEAD']).decode('utf-8')
 
         # Extract the added and modified code using regular expressions
         added_modified_code = re.findall(r'^\+.*', git_diff, re.MULTILINE)
