@@ -357,5 +357,53 @@ if __name__ == '__main__':
 
             window.mainloop()
             
+        elif 'relaxation time' in query:
+            speak(' shall i play a song')
+            speak('or')
+            speak('listen to poem')
+            speak('say something sir')
+            if query=='listen to poem':
+                speak('''Ozymandias” by Percy Bysshe Shelley
+                        I met a traveler from an antique land
+                        Who said: “Two vast and trunkless legs of stone
+                        Stand in the desert . . . Near them, on the sand,
+                        Half sunk, a shattered visage lies, whose frown,
+                        And wrinkled lip, and sneer of cold command,
+                        Tell that its sculptor well those passions read
+                        Which yet survive, stamped on these lifeless things,
+                        The hand that mocked them, and the heart that fed:
+                        And on the pedestal these words appear:
+                       ‘My name is Ozymandias, king of kings:
+                        Look on my works, ye Mighty, and despair!’
+                        Nothing beside remains. Round the decay
+                        Of that colossal wreck, boundless and bare
+                        The lone and level sands stretch far away.''')
+            else:
+                pass
+        elif 'tell about my school'in query:
+            speak("okay!")
+            speak("Notre Dame of Holy Cross School [CBSE]")
+            speak("a primary and secondary Catholic school founded in Gundukallur, Udayapatti, Salem, Tamil Nadu,")
+            speak("India by the Brothers of Holy Cross in 2008. It is a Co Education School with CBSE syllabus.")
+
+
+        else:
+            query = query
+            speak('Searching...')
+            try:
+                try:
+                    res = client.query(query)
+                    results = next(res.results).text
+                    speak('THE LEGEND says - ')
+                    speak('Got it.')
+                    speak(results)
+                except:
+                    results = wikipedia.summary(query, sentences=2)
+                    speak('Got it.')
+                    speak('WIKIPEDIA says - ')
+                    speak(results)
+            except:
+                webbrowser.open('www.google.com')
         
+        speak('Next Command! Sir!')
         
